@@ -171,7 +171,8 @@ if "res" in st.session_state and st.session_state["res"]:
     a,b,c = st.columns(3)
     a.metric("TIER 1", len(t1)); b.metric("TIER 2", len(t2)); c.metric("TIER 3", len(t3))
     if t1:
-        st.success(f"TOP: {', '.join([f\"{r['Symbol']} ({r['Score']})\" for r in t1[:3]])}")
+        top3 = ", ".join([r['Symbol'] + " (" + str(r['Score']) + ")" for r in t1[:3]])
+st.success("TOP: " + top3)
     df = pd.DataFrame(res)[["Symbol","Price Str","MA Str","Jarak %","Fibo 78.6%","Fibo Signal","Vol 24h","Tier"]]
     st.dataframe(df, use_container_width=True, hide_index=True)
     st.download_button("⬇️ Download CSV", df.to_csv(index=False), "screener.csv", "text/csv", use_container_width=True)
